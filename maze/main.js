@@ -3,6 +3,7 @@
  */
 var walls = {} // {id_id: true/false}}
 var nodes = {} // id: {x:0,y:0}
+var unionData = {} // 并查集数据结构
 init()
 draw()
 
@@ -76,6 +77,45 @@ function init() {
             }
         }
     }
+    getMazeByUnion()
+}
+
+/**
+ * 使用并查集进行地图绘制
+ * {
+ *  id: parentId
+ * }
+ */
+function getMazeByUnion () {
+    // 选中任意的一个节点, 将节点的父节点指向自己
+    var cols = 800 / 20
+    var rows = 500 / 20
+    var num = cols * rows
+    var randomId = Math.floor(Math.random() * num)
+    unionData[randomId] = randomId
+    // 设置墙列表
+    // 选出来的墙
+    wallList = []
+    // 已删除的墙
+    delWalls = []
+    // 取第一个节点的几面墙
+    selectWalls(randomId)
+    var currentId = randomId
+    while(wallList.length > 0) {
+        var len = wallList.length
+        var randomWall = wallList[Math.floor(Math.random() * len)]
+    }
+}
+
+/**
+ * 根据节点id获取墙列表，过滤掉已经删除掉的墙
+ */
+function selectWalls(id) {
+    Object.keys(walls).forEach(function(e) {
+        if (e.indexOf(id.toString()) !== -1 && delWalls.indexOf(e) === -1) {
+            wallList.push(e)
+        }
+    })
 }
 
 /**
