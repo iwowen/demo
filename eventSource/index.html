@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>时间</title>
+</head>
+<body>
+    <div id="time"></div>
+</body>
+<script>
+    var es = new EventSource('/event');
+    es.onopen = function(e) {
+        console.log('连接建立')
+    }
+    es.onmessage = function(e) {
+        document.getElementById('time').innerText = new Date(Math.floor(e.data))
+        console.log(e.data)
+    }
+    es.onerror = function(e) {
+        console.log('连接失败')
+    }
+    // 监听指定类型的事件（可以监听多个）
+    // es.addEventListener("myEve", function (event) {
+    //     console.log("myEve", event.data)
+    // })
+</script>
+</html>
